@@ -10,8 +10,8 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import JwtAuthenticationGuard from 'src/authentication/guards/jwt-authentication.guard';
-import RequestWithUser from 'src/authentication/interfaces/requestWithUser.interface';
+import JwtAuthenticationGuard from '../../authentication/guards/jwt-authentication.guard';
+import RequestWithUser from '../../authentication/interfaces/requestWithUser.interface';
 import { AddressesService } from './addresses.service';
 import { CreateAddressesDto } from './dto/create-addresses.dto';
 import { UpdateAddressesDto } from './dto/update-addresses.dto';

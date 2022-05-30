@@ -7,6 +7,8 @@ import {
   UseGuards,
   Res,
   Get,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthenticationService } from './authentication.service';
@@ -25,7 +27,6 @@ export class AuthenticationController {
    */
   @Post('register')
   async register(@Body() registrationData: RegisterDataDto) {
-    console.log(registrationData);
     return this.authenticationService.register(registrationData);
   }
 
@@ -41,6 +42,7 @@ export class AuthenticationController {
     const { user } = request;
     const cookie = this.authenticationService.getCookieWithJwtToken(user.id);
     request.res.setHeader('Set-Cookie', cookie);
+    user.password = undefined;
     return user;
   }
   /*

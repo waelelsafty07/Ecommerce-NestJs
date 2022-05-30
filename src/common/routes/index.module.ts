@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
-import { AddressesModule } from 'src/components/addresses/addresses.module';
-import { AuthenticationModule } from 'src/authentication/authentication.module';
-import { UsersModule } from 'src/components/users/users.module';
+import { AddressesModule } from '../../components/addresses/addresses.module';
+import { AuthenticationModule } from '../../authentication/authentication.module';
+import { UsersModule } from '../../components/users/users.module';
 import { CategoriesModule } from '../../components/categories/categories.module';
 
 @Module({

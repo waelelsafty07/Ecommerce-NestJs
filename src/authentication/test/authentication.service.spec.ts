@@ -17,7 +17,7 @@ const mockedConfigService = {
     }
   },
 };
-export const mockedJwtService = {
+const mockedJwtService = {
   sign: () => '',
 };
 

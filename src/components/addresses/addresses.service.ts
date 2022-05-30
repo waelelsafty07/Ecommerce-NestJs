@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import User from 'src/components/users/entity/user.entity';
+import User from '../../components/users/entity/user.entity';
 import { Repository } from 'typeorm';
 import { CreateAddressesDto } from './dto/create-addresses.dto';
 import { addressNotFoundException } from './exception/addressNotFund.exception';
@@ -30,7 +30,6 @@ export class AddressesService {
     if (!address) throw new addressNotFoundException(+id);
     if (address.user.id !== user.id)
       throw new addressNotBelongToYouException(+id);
-    console.log(address.user, user);
 
     return this.addressRepository.update(id, updateAddressDto);
   }

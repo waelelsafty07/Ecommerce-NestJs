@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PaginationQureyDto } from 'src/common/dto/pagination-qurey.dto';
+import { PaginationQureyDto } from '../../common/dto/pagination-qurey.dto';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import User from './entity/user.entity';
