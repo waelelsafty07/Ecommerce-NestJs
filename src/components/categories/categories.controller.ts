@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -7,9 +8,12 @@ import {
   Patch,
   Post,
   Query,
+  Req,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import RequestWithUser from '../../authentication/interfaces/requestWithUser.interface';
 import JwtAuthenticationGuard from '../../authentication/guards/jwt-authentication.guard';
 import { PaginationQureyDto } from '../../common/dto/pagination-qurey.dto';
 import { CategoriesService } from './categories.service';
@@ -36,16 +40,22 @@ export class CategoriesController {
   }
 
   @Post()
+  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(JwtAuthenticationGuard)
-  create(@Body() createCategoriesDto: CreateCategoriesDto) {
-    return this.categoriesService.create(createCategoriesDto);
+  create(
+    @Body() createCategoriesDto: CreateCategoriesDto,
+    @Req() req: RequestWithUser,
+  ) {
+    return this.categoriesService.create(createCategoriesDto, req.user);
   }
   @Patch(':id')
+  @UseGuards(JwtAuthenticationGuard)
   update(
     @Param('id') id: string,
     @Body() updateCategoriesDto: UpdateCategoriesDto,
+    @Req() req: RequestWithUser,
   ) {
-    return this.categoriesService.update(id, updateCategoriesDto);
+    return this.categoriesService.update(id, updateCategoriesDto, req.user);
   }
   @Delete(':id')
   remove(@Param('id') id: string) {

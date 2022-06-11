@@ -2,9 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { PaginationQureyDto } from '../../common/dto/pagination-qurey.dto';
+import User from '../users/entity/user.entity';
 import { CreateCategoriesDto } from './dto/create-categories.dto';
 import { UpdateCategoriesDto } from './dto/update-categories.dto';
 import { Category } from './entity/category.entity';
+import { categoriesNotBelongToYouException } from './exception/categoriesAuthorization.exception';
 import { CategoryNotFoundException } from './exception/categoryNotFound.exception';
 
 @Injectable()
@@ -26,17 +28,27 @@ export class CategoriesService {
     if (!Category) throw new CategoryNotFoundException(+id);
     return Category;
   }
-  async create(createCategoriesDto: CreateCategoriesDto) {
-    const Category = this.categoryRepository.create(createCategoriesDto);
-    return this.categoryRepository.save(Category);
+  async create(createCategoriesDto: CreateCategoriesDto, user: User) {
+    const Address = this.categoryRepository.create({
+      ...createCategoriesDto,
+      user,
+    });
+    return this.categoryRepository.save(Address);
   }
-  async update(id: string, updateCategoriesDto: UpdateCategoriesDto) {
-    const Category = await this.categoryRepository.preload({
-      id: +id,
-      ...updateCategoriesDto,
+
+  async update(
+    id: string,
+    updateCategoriesDto: UpdateCategoriesDto,
+    user: User,
+  ) {
+    const Category = await this.categoryRepository.findOne(id, {
+      relations: ['user'],
     });
     if (!Category) throw new CategoryNotFoundException(+id);
-    return this.categoryRepository.save(Category);
+    if (Category.user.id !== user.id)
+      throw new categoriesNotBelongToYouException(+id);
+
+    return this.categoryRepository.update(id, updateCategoriesDto);
   }
   async remove(id: string) {
     const Category = await this.categoryRepository.findOne(id);

@@ -53,8 +53,7 @@ describe('The AuthenticationController', () => {
   describe('When login', () => {
     describe('and using valid data', () => {
       it('should response with user data', () => {
-        const moks = new MockStrategy();
-        passport.use('local', moks);
+        passport.use('local', new MockStrategy());
         return request(app.getHttpServer())
           .post('/authentication/log-in')
           .expect(200);

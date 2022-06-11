@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { Category } from '../../categories/entity/category.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import Address from '../../addresses/entity/address.entity';
 
@@ -21,6 +22,8 @@ class User {
     cascade: true,
   })
   address: Address[];
+  @OneToMany(() => Category, (category: Category) => category.user)
+  categories?: Category[];
 }
 
 export default User;

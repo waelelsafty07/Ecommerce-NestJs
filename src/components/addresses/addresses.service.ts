@@ -26,7 +26,9 @@ export class AddressesService {
     updateAddressDto: UpdateAddressesDto,
     user: User,
   ) {
-    const address = await this.addressRepository.findOne(id);
+    const address = await this.addressRepository.findOne(id, {
+      relations: ['user'],
+    });
     if (!address) throw new addressNotFoundException(+id);
     if (address.user.id !== user.id)
       throw new addressNotBelongToYouException(+id);

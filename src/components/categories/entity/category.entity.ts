@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
+import User from '../../users/entity/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('categories')
 export class Category {
   @PrimaryGeneratedColumn()
@@ -12,4 +14,7 @@ export class Category {
 
   @Column({ nullable: true })
   image: string;
+  @ManyToOne(() => User, (user: User) => user.id)
+  @Exclude()
+  user?: User;
 }

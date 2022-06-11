@@ -6,6 +6,7 @@ import AppConfig from './config/app.config';
 import { APP_FILTER } from '@nestjs/core';
 import { ExceptionsLoggerFilter } from './utils/exceptionsLogger.filter';
 import { DatabaseModule } from './database/databaseModule/database.module.module';
+import { BrandModule } from './components/brand/brand.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { DatabaseModule } from './database/databaseModule/database.module.module
     }),
     DatabaseModule,
     IndexRoutesModule,
+    BrandModule,
 
     // Mount Routes Start api/v1
   ],
