@@ -1,6 +1,6 @@
 import { UnauthorizedException } from '@nestjs/common';
 
-export class categoriesNotBelongToYouException extends UnauthorizedException {
+export class brandNotBelongToYouException extends UnauthorizedException {
   constructor(id: number) {
     super(`This Brand #${id} Not Belong To You`);
   }

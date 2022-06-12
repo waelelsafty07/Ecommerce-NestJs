@@ -10,12 +10,14 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import JwtAuthenticationGuard from '../../authentication/guards/jwt-authentication.guard';
 import RequestWithUser from '../../authentication/interfaces/requestWithUser.interface';
 import { AddressesService } from './addresses.service';
 import { CreateAddressesDto } from './dto/create-addresses.dto';
 import { UpdateAddressesDto } from './dto/update-addresses.dto';
 
+@ApiTags('addresses')
 @Controller('addresses')
 export class AddressesController {
   constructor(private readonly addressesService: AddressesService) {}

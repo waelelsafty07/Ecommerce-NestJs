@@ -10,6 +10,7 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthenticationService } from './authentication.service';
 import { RegisterDataDto } from './dto/register-data.dto';
@@ -17,6 +18,7 @@ import JwtAuthenticationGuard from './guards/jwt-authentication.guard';
 import RequestWithUser from './interfaces/requestWithUser.interface';
 import { LocalAuthenticationGuard } from './passport/localAuthentication.guard';
 
+@ApiTags('authentication')
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}

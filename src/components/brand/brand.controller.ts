@@ -13,17 +13,17 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import JwtAuthenticationGuard from 'src/authentication/guards/jwt-authentication.guard';
 import RequestWithUser from '../../authentication/interfaces/requestWithUser.interface';
-import JwtAuthenticationGuard from '../../authentication/guards/jwt-authentication.guard';
 import { PaginationQureyDto } from '../../common/dto/pagination-qurey.dto';
-import { CategoriesService } from './categories.service';
-import { CreateCategoriesDto } from './dto/create-categories.dto';
-import { UpdateCategoriesDto } from './dto/update-categories.dto';
+import { BrandsService } from './brand.service';
+import { CreateBrandsDto } from './dto/create-brands.dto';
+import { UpdateBrandsDto } from './dto/update-brands.dto';
 
-@ApiTags('Categories')
-@Controller('categories')
-export class CategoriesController {
-  constructor(private readonly categoriesService: CategoriesService) {}
+@ApiTags('Brands')
+@Controller('brands')
+export class BrandController {
+  constructor(private readonly brandsService: BrandsService) {}
   /*
    * @desc   Get All Category
    * @route  GET /api/v1/Categories
@@ -32,34 +32,34 @@ export class CategoriesController {
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @Get()
   findAll(@Query() paginationQuery: PaginationQureyDto) {
-    return this.categoriesService.findAll(paginationQuery);
+    return this.brandsService.findAll(paginationQuery);
   }
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.categoriesService.findOne(id);
+    return this.brandsService.findOne(id);
   }
 
   @Post()
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(JwtAuthenticationGuard)
   create(
-    @Body() createCategoriesDto: CreateCategoriesDto,
+    @Body() createBrandsDto: CreateBrandsDto,
     @Req() req: RequestWithUser,
   ) {
-    return this.categoriesService.create(createCategoriesDto, req.user);
+    return this.brandsService.create(createBrandsDto, req.user);
   }
   @Patch(':id')
   @UseGuards(JwtAuthenticationGuard)
   update(
     @Param('id') id: string,
-    @Body() updateCategoriesDto: UpdateCategoriesDto,
+    @Body() updateBrandsDto: UpdateBrandsDto,
     @Req() req: RequestWithUser,
   ) {
-    return this.categoriesService.update(id, updateCategoriesDto, req.user);
+    return this.brandsService.update(id, updateBrandsDto, req.user);
   }
   @Delete(':id')
   @UseGuards(JwtAuthenticationGuard)
   remove(@Param('id') id: string, @Req() req: RequestWithUser) {
-    return this.categoriesService.remove(id, req.user);
+    return this.brandsService.remove(id, req.user);
   }
 }

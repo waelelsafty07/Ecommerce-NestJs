@@ -26,7 +26,6 @@ import { BrandModule } from './components/brand/brand.module';
     }),
     DatabaseModule,
     IndexRoutesModule,
-    BrandModule,
 
     // Mount Routes Start api/v1
   ],

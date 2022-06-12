@@ -29,11 +29,11 @@ export class CategoriesService {
     return Category;
   }
   async create(createCategoriesDto: CreateCategoriesDto, user: User) {
-    const Address = this.categoryRepository.create({
+    const Category = this.categoryRepository.create({
       ...createCategoriesDto,
       user,
     });
-    return this.categoryRepository.save(Address);
+    return this.categoryRepository.save(Category);
   }
 
   async update(
@@ -50,9 +50,13 @@ export class CategoriesService {
 
     return this.categoryRepository.update(id, updateCategoriesDto);
   }
-  async remove(id: string) {
-    const Category = await this.categoryRepository.findOne(id);
+  async remove(id: string, user: User) {
+    const Category = await this.categoryRepository.findOne(id, {
+      relations: ['user'],
+    });
     if (!Category) throw new CategoryNotFoundException(+id);
+    if (Category.user.id !== user.id)
+      throw new categoriesNotBelongToYouException(+id);
     return this.categoryRepository.remove(Category);
   }
 }

@@ -4,6 +4,7 @@ import { AddressesModule } from '../../components/addresses/addresses.module';
 import { AuthenticationModule } from '../../authentication/authentication.module';
 import { UsersModule } from '../../components/users/users.module';
 import { CategoriesModule } from '../../components/categories/categories.module';
+import { BrandModule } from 'src/components/brand/brand.module';
 
 @Module({
   imports: [
@@ -11,10 +12,15 @@ import { CategoriesModule } from '../../components/categories/categories.module'
     UsersModule,
     AuthenticationModule,
     CategoriesModule,
+    BrandModule,
     RouterModule.register([
       {
         path: 'api/v1',
         module: UsersModule,
+      },
+      {
+        path: 'api/v1',
+        module: BrandModule,
       },
       {
         path: 'api/v1',
